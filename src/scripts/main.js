@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 const ListItem = React.createClass({
 
   handleClick: function() {
-    // TODO: Remove this
-    console.log(`You clicked ${this.props.name}!`);
+    this.props.onRemove(this.props.name);
   },
 
   render: function() {
@@ -46,9 +45,15 @@ const ListMaker = React.createClass({
     });
   },
 
+  removeName: function (newName) {
+    this.setState({
+      names: this.state.names.filter((name) => { return name !== newName })
+    });
+  },
+
   render: function() {
     let listItems = this.state.names.map((item, i) => {
-      return <ListItem key={i} name={item} />
+      return <ListItem key={i} name={item} onRemove={this.removeName} />
     });
     return (<div>
       <h1>List Maker</h1>
