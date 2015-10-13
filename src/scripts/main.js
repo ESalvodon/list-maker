@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 const ListItem = React.createClass({
 
   handleClick: function() {
-    this.props.onRemove(this.props.name);
+    this.props.onRemove(this.props.index);
   },
 
   render: function() {
@@ -38,22 +38,24 @@ const ListMaker = React.createClass({
   },
 
   addName: function (newName) {
-    let names = this.state.names;
+    let names = this.state.names.slice();
     names.push(newName);
     this.setState({
       names: names
     });
   },
 
-  removeName: function (newName) {
+  removeName: function (index) {
+    let names = this.state.names.slice();
+    names.splice(index, 1);
     this.setState({
-      names: this.state.names.filter((name) => { return name !== newName })
+      names: names
     });
   },
 
   render: function() {
     let listItems = this.state.names.map((item, i) => {
-      return <ListItem key={i} name={item} onRemove={this.removeName} />
+      return <ListItem key={i} name={item} index={i} onRemove={this.removeName} />
     });
     return (<div>
       <h1>List Maker</h1>
