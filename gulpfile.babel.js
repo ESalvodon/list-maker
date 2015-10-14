@@ -18,8 +18,7 @@ gulp.task('html', () => {
 
 gulp.task('script', () => {
   browserify({
-      entries: ['./src/scripts/main.js'],
-      extension: ['.js'],
+      entries: ['./src/scripts/main.jsx'],
       debug: true
     }).transform(babelify).bundle()
     .on('error', function(err) {
@@ -57,7 +56,7 @@ gulp.task('serve', ['build'], () => {
 
   gulp.watch('src/**/*.{html,jade}', ['html']);
   gulp.watch('src/**/*.{scss,sass}', ['styles']);
-  gulp.watch('src/**/*.js', ['script'])
+  gulp.watch('src/**/*.jsx', ['script'])
 });
 
 gulp.task('default', ['serve']);

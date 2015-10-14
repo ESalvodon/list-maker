@@ -4,11 +4,10 @@ import ReactDOM from 'react-dom';
 const ListItem = React.createClass({
 
   handleClick: function() {
-    this.props.onRemove(this.props.index);
+    this.props.onRemoveName(this.props.index);
   },
 
   render: function() {
-
     return (
       <li onClick={this.handleClick}>{this.props.name}</li>
     );
@@ -19,6 +18,8 @@ const ListForm = React.createClass({
 
   saveComment: function (event) {
     event.preventDefault();
+    // This is a reference to ListMaker's `addName` function,
+    // passed in through the props.
     this.props.onSaveComment(this.refs.name.value);
   },
 
@@ -31,15 +32,20 @@ const ListForm = React.createClass({
 });
 
 const ListMaker = React.createClass({
+
   getInitialState: function () {
     return {
       names: this.props.names
     }
   },
 
+  componentWillMount: function () {
+  },
+
   addName: function (newName) {
     let names = this.state.names.slice();
     names.push(newName);
+    // Tell React we changed the state.
     this.setState({
       names: names
     });
@@ -55,7 +61,7 @@ const ListMaker = React.createClass({
 
   render: function() {
     let listItems = this.state.names.map((item, i) => {
-      return <ListItem key={i} name={item} index={i} onRemove={this.removeName} />
+      return <ListItem key={i} index={i} name={item} onRemoveName={this.removeName} />
     });
     return (<div>
       <h1>List Maker</h1>
@@ -69,7 +75,7 @@ const ListMaker = React.createClass({
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <ListMaker names={["Jason", "Jason", "Sandra", "Mark"]} /> ,
+    <ListMaker names={["Jason", "Jason", "Sandra", "Mark"]} />,
     document.querySelector('.app')
   );
 });
