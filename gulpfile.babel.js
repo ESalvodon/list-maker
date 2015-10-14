@@ -18,7 +18,7 @@ gulp.task('html', () => {
 
 gulp.task('script', () => {
   browserify({
-      entries: ['./src/scripts/main.jsx'],
+      entries: ['./src/scripts/main.js'],
       debug: true
     }).transform(babelify).bundle()
     .on('error', function(err) {
